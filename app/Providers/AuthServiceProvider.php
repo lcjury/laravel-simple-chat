@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        \Auth::provider('chat', function ($app, array $config) {
+            return new \App\Auth\ChatUserProvider();
+        });
     }
 }

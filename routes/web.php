@@ -13,3 +13,5 @@
 
 Route::get('/', 'CommentController@index');
 Route::resource('comment', 'CommentController')->only(['index', 'store']);
+
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');

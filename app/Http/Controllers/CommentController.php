@@ -17,7 +17,7 @@ class CommentController extends Controller
     {
         $comments = $chatService->getComments();
         return view('chat', [
-            'comments' => $comments
+            'comments' => $comments,
         ]);
     }
 
@@ -29,7 +29,11 @@ class CommentController extends Controller
      */
     public function store(StoreComment $request, ChatService $chatService)
     {
-        $owner = $request->input('owner');
+        if (\Auth::guest()) {
+            \Auth::attempt(['name' => $request->get('owner')]);
+        }
+
+        $owner = \Auth::user()->name;
         $comment = $request->input('content');
 
         $chatService->storeComment($owner, $comment);
