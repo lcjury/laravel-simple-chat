@@ -11,3 +11,5 @@
 |
 */
 
+Route::get('/', 'CommentController@index');
+Route::resource('comment', 'CommentController')->only(['index', 'store']);
