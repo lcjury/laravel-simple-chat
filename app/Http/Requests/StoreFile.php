@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreComment extends FormRequest
+class StoreFile extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,8 @@ class StoreComment extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'content' => 'required|max:255',
-            'owner' => 'nullable|max:30'
+        return [
+            'file' => 'required|file|mimetypes:image/gif,image/jpeg,image/png,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi'
         ];
-
-        return $rules;
     }
 }

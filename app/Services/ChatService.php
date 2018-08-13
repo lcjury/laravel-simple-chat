@@ -19,7 +19,7 @@ class ChatService
     public function getComments()
     {
         $comments = $this->cache->remember($this->cache_key, $this->cache_expire_time, function() {
-            return  \App\Comment::orderBy('id')->get();
+            return  \App\Comment::with('media')->orderBy('id')->get();
         });
         return $comments;
     }
@@ -33,6 +33,24 @@ class ChatService
         ]);
 
         $comment->save();
+        $this->cache->forget($this->cache_key);
+        return $comment;
+    }
+
+    public function storeMedia($owner, $file_path, $file_mime)
+    {
+        $file_type = guest_filetype($file_mime, \App\Comment::TYPE_MAP);
+
+        $comment = new \App\Comment([
+            'owner' => $owner,
+            'content' => '',
+            'type' => $file_type
+        ]);
+        $comment->save();
+        $comment->media()->create([
+            'src' => $file_path
+        ]);
+
         $this->cache->forget($this->cache_key);
         return $comment;
     }

@@ -13,5 +13,6 @@
 
 Route::get('/', 'CommentController@index');
 Route::resource('comment', 'CommentController')->only(['index', 'store']);
+Route::resource('file', 'FileController')->only(['store'])->middleware('auth');
 
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
